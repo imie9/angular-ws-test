@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 
+import { WebsocketService } from './services/websocket.service';
+import { SearchService } from './services/search.service';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -10,7 +13,10 @@ import { AppComponent } from './app.component';
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [
+    WebsocketService,
+    SearchService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
