@@ -1,1 +1,42 @@
-<button (click)="sendMsg()">Send Message</button>
+<section>
+  <ngx-spinner size="medium"
+               color="#fff"
+               type="ball-pulse"></ngx-spinner>
+  <div class="container">
+    <div class="columns" *ngIf="is_done">
+      <div class="column">
+        <div class="columns hotel" *ngFor="let hotel of hotels">
+          <div class="column is-one-third image-block">
+            <div class="discount" *ngIf="hotel.items[0][0].commerce.discount">
+              <p>Сэкономьте {{ hotel.items[0][0].commerce.discount }}%</p>
+            </div>
+            <figure class="image image is-5by4">
+              <img src="{{hotel.info.img ? img_url + hotel.info.img : 'https://bulma.io/images/placeholders/600x480.png'}}">
+            </figure>
+          </div>
+          <div class="column info" style="background: #ffffff">
+            <h5 class="title is-5 name">{{ hotel.info.name }}</h5>
+            <div class="stars">
+              <i class="icon ion-md-star" *ngFor="let s of stars(hotel.info.cat)"></i>
+            </div>
+            <div class="addr">
+              <h6 class="subtitle is-6">Расположение</h6>
+              <p>{{ hotel.info.addr }}</p>
+            </div>
+          </div>
+          <div class="column is-one-fifth price">
+            <div class="price">
+              <div class="price-disc" >
+                <p>{{ hotel.items[0][0].commerce.payment }}</p>
+              </div>
+              <p>{{ hotel.items[0][0].commerce.tpayment + ' ' + hotel.items[0][0].commerce.reservationfeecurrency }}</p>
+            </div>
+            <div class="look">
+              <a class="button is-primary">Посмотреть</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

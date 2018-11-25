@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 import {WebsocketService} from './services/websocket.service';
 import {SearchService} from './services/search.service';
@@ -6,56 +7,46 @@ import {SearchService} from './services/search.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
 
-  private url = 'wss://demoapi.night2stay.com/api/v2/websocket';
+  public hotels = [];
+  public img_url = 'https://img1.night2stay.com';
+  public is_done = false;
 
-  constructor(private ws: WebsocketService, private search: SearchService) {
-    search.messages.subscribe(msg => {
-      console.log('Response: ' + msg);
-    });
-  }
+  constructor(private ws: WebsocketService, private searchService: SearchService, private spinner: NgxSpinnerService) {}
 
-  sendMsg() {
-    // const msg = {
-    //   action: 'accommodation',
-    //   data: {
-    //     place: {
-    //       in: 'CI266088ZZ'
-    //     },
-    //     date: {
-    //       in: 1549756800000,
-    //       out: 1549929600000
-    //     },
-    //     families: [
-    //       {
-    //         adults: 2
-    //       }
-    //     ],
-    //     lastid: 0,
-    //     num: 5
-    //   },
-    //   key: '2ee1edbf-d90f-4785-b9db-5b07ce70a928',
-    //   type: 'service'
-    // };
-
-    const msg = {
-      action: 'login',
-      data: {
-        key: '123123',
-        wlcompany: 'CMPN00000053'
-      },
-      key: '4bd97223-9ad0-4261-821d-3e9ffc356e32',
-      type: 'account'
-    };
-
-    this.search.messages.next(msg);
-
+  stars(num: number): Array<number> {
+    switch (num) {
+      case 0:
+        num = 3;
+        break;
+      case 1:
+        num = 4;
+        break;
+      case 2:
+        num = 5;
+        break;
+    }
+    return new Array(num);
   }
 
   ngOnInit() {
-
+    this.searchService.search();
+    this.spinner.show();
+    this.searchService.messages.subscribe(msg => {
+      if (msg.data && msg.data.search) {
+        if (!msg.data.done) {
+          setTimeout(() => {
+            this.searchService.search();
+          }, (msg.data.exptime / 100));
+        } else {
+          this.spinner.hide();
+          this.is_done = true;
+          this.hotels = msg.data.search;
+        }
+      }
+    });
   }
 }

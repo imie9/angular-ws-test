@@ -1,0 +1,72 @@
+.columns {
+  margin-top: 5px;
+  .hotel {
+    .image-block {
+      padding: 0;
+      .discount {
+        position: absolute;
+        height: 20px;
+        width: 110px;
+        background: red;
+        z-index: 10;
+        margin-top: 1%;
+        margin-left: 1%;
+        font-weight: 800;
+        p {
+          color: #ffffff;
+          font-size: 12px;
+          text-align: center;
+        }
+      }
+    }
+    .info {
+      .name {
+        margin-bottom: 0;
+      }
+      .stars {
+        display: flex;
+        .icon {
+          width: 1rem;
+          color: #e1db23;
+        }
+      }
+      .addr {
+        .subtitle {
+          margin-bottom: 0;
+        }
+        p {
+          font-size: 12px;
+        }
+      }
+    }
+    .price {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: #dbd8d8;
+      div {
+        display: flex;
+        justify-content: center;
+      }
+      .price {
+        .price-disc {
+          p {
+            font-size: 14px;
+          }
+          text-decoration: line-through;
+          color: red;
+        }
+        margin-top: auto;
+        p {
+          text-align: center;
+          font-size: 18px;
+          font-weight: 700;
+        }
+      }
+      .look {
+        margin-top: auto;
+      }
+    }
+  }
+
+}
